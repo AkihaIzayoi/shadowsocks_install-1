@@ -13,8 +13,8 @@
 
 # Author: www.91yun.org
 
-name=ShadowsocksR
-BIN=#ssrdir#
+name=ShadowsocksRR
+BIN=#ssrrdir#
 conf=/etc/shadowsocks.json
 
 start(){
@@ -36,20 +36,20 @@ status(){
 }
 
 adduser(){
-	bash ${BIN}ssr.sh adduser
+	bash ${BIN}ssrr.sh adduser
 }
 
 deluser(){
-	bash ${BIN}ssr.sh deluser
+	bash ${BIN}ssrr.sh deluser
 }
 
 update(){
-	bash ${BIN}ssr.sh update
+	bash ${BIN}ssrr.sh update
 }
 
 
 uninstall(){
-	bash ${BIN}ssr.sh uninstall
+	bash ${BIN}ssrr.sh uninstall
 }
 
 case "$1" in
