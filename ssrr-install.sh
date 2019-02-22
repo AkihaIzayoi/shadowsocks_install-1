@@ -3,8 +3,8 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
 #安装目录
-ssrdir=/home/ssr/
-mkdir -p ${ssrdir}
+ssrrdir=/home/ssrr/
+mkdir -p ${ssrrdir}
 
 #判断是否root权限
 function rootness(){
@@ -70,9 +70,9 @@ else
 fi
 
 #安装chacha20的依赖库
-wget -N --no-check-certificate https://raw.githubusercontent.com/w123456w30w/shadowsocks_install/master/libsodium-1.0.12.tar.gz
-tar zfvx libsodium-1.0.12.tar.gz
-cd libsodium-1.0.12
+wget -N --no-check-certificate https://raw.githubusercontent.com/w123456w30w/shadowsocks_install/master/libsodium-1.0.17.tar.gz
+tar zfvx libsodium-1.0.17.tar.gz
+cd libsodium-1.0.17
 ./configure
 make && make install
 echo "include ld.so.conf.d/*.conf" > /etc/ld.so.conf
@@ -81,55 +81,55 @@ echo "/usr/lib64" >> /etc/ld.so.conf
 echo "/usr/local/lib" >> /etc/ld.so.conf
 ldconfig
 cd /root/
-rm -rf libsodium-1.0.12.tar.gz libsodium-1.0.12
+rm -rf libsodium-1.0.17.tar.gz libsodium-1.0.17
 
-#git安装ssr
-git clone -b akkariiin/master https://github.com/w123456w30w/shadowsocksr.git ${ssrdir}
-cd ${ssrdir}
+#git安装ssrr
+git clone -b akkariiin/master https://github.com/w123456w30w/shadowsocksr.git ${ssrrdir}
+cd ${ssrrdir}
 bash setup_cymysql.sh
 bash initcfg.sh
-sed -i "s/'sspanelv2'/'mudbjson'/g" ${ssrdir}userapiconfig.py
+sed -i "s/'sspanelv2'/'mudbjson'/g" ${ssrrdir}userapiconfig.py
 myip=`curl myip.ipip.net | awk -F "：" '{print $2}' | awk '{print $1}'`
-sed -i "s/127.0.0.1/$myip/g" ${ssrdir}userapiconfig.py
+sed -i "s/127.0.0.1/$myip/g" ${ssrrdir}userapiconfig.py
 
 #下载服务文件，添加到系统服务，并随机启动
 if [ "$OS" == 'CentOS' ]; then
-	if ! wget --no-check-certificate https://raw.githubusercontent.com/w123456w30w/shadowsocks_install/master/ssr -O /etc/init.d/ssrr; then
-		echo "Failed to download ssr chkconfig file!"
+	if ! wget --no-check-certificate https://raw.githubusercontent.com/w123456w30w/shadowsocks_install/master/ssrr -O /etc/init.d/ssrrr; then
+		echo "Failed to download ssrr chkconfig file!"
 		exit 1
 	fi
 else
-	if ! wget --no-check-certificate https://raw.githubusercontent.com/w123456w30w/shadowsocks_install/master/ssr-debian -O /etc/init.d/ssrr; then
-		echo "Failed to download ssr chkconfig file!"
+	if ! wget --no-check-certificate https://raw.githubusercontent.com/w123456w30w/shadowsocks_install/master/ssrr-debian -O /etc/init.d/ssrrr; then
+		echo "Failed to download ssrr chkconfig file!"
 		exit 1
 	fi
 fi
 
-sed -i "s@BIN=.*@BIN=$ssrdir@g" /etc/init.d/ssr
+sed -i "s@BIN=.*@BIN=$ssrrdir@g" /etc/init.d/ssrr
 
-cp /etc/init.d/ssr /bin/
+cp /etc/init.d/ssrr /bin/
 
 
-chmod +x /etc/init.d/ssr
-chmod +x /bin/ssr
+chmod +x /etc/init.d/ssrr
+chmod +x /bin/ssrr
 if [ "$OS" == 'CentOS' ]; then
-	chkconfig --add ssr
-	chkconfig ssr on
+	chkconfig --add ssrr
+	chkconfig ssrr on
 else
-	update-rc.d -f ssr defaults
+	update-rc.d -f ssrr defaults
 fi
 
 #下载定制脚本到目录
-if ! wget --no-check-certificate https://raw.githubusercontent.com/w123456w30w/shadowsocks_install/master/ssr.sh -O ${ssrdir}ssr.sh; then
-	echo "Failed to download ssr script file!"
+if ! wget --no-check-certificate https://raw.githubusercontent.com/w123456w30w/shadowsocks_install/master/ssrr.sh -O ${ssrrdir}ssrr.sh; then
+	echo "Failed to download ssrr script file!"
 	exit 1
 fi
-sed -i "s@ssrdir=.*@ssrdir=$ssrdir@g" ${ssrdir}ssr.sh
+sed -i "s@ssrrdir=.*@ssrrdir=$ssrrdir@g" ${ssrrdir}ssrr.sh
 
 
 #启动定制脚本开始添加用户
-ssr start
-ssr adduser
+ssrr start
+ssrr adduser
 
 
 
