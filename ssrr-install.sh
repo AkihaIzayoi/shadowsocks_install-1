@@ -94,12 +94,12 @@ sed -i "s/127.0.0.1/$myip/g" ${ssrrdir}userapiconfig.py
 
 #下载服务文件，添加到系统服务，并随机启动
 if [ "$OS" == 'CentOS' ]; then
-	if ! wget --no-check-certificate https://raw.githubusercontent.com/w123456w30w/shadowsocks_install/master/ssrr -O /etc/init.d/ssrrr; then
+	if ! wget --no-check-certificate https://raw.githubusercontent.com/w123456w30w/shadowsocks_install/master/ssrr -O /etc/init.d/ssrr; then
 		echo "Failed to download ssrr chkconfig file!"
 		exit 1
 	fi
 else
-	if ! wget --no-check-certificate https://raw.githubusercontent.com/w123456w30w/shadowsocks_install/master/ssrr-debian -O /etc/init.d/ssrrr; then
+	if ! wget --no-check-certificate https://raw.githubusercontent.com/w123456w30w/shadowsocks_install/master/ssrr-debian -O /etc/init.d/ssrr; then
 		echo "Failed to download ssrr chkconfig file!"
 		exit 1
 	fi
